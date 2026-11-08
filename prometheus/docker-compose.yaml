@@ -1,0 +1,20 @@
+services:
+  prometheus:
+    image: prom/prometheus:v3.13.5
+    container_name: monitoring-prometheus
+    restart: unless-stopped
+    network_mode: host
+
+    volumes:
+      - ./secrets:/etc/prometheus/secrets:ro
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.listen-address=127.0.0.1:19090'
+
+volumes:
+  prometheus-data:

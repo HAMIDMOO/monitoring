@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['127.0.0.1:19100']
+        labels:
+          server: 'kavoshcom'
+
+      - targets: ['94.184.46.188:19100']
+        labels:
+          server: 'AI_INFRA'
+
+  - job_name: 'gpu-exporter'
+    static_configs:
+      - targets: ['127.0.0.1:19400']
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['127.0.0.1:19090']
+
+  - job_name: 'litellm'
+    scheme: https
+    metrics_path: /metrics/
+    scrape_interval: 15s
+
+    authorization:
+      type: Bearer
+      credentials_file: /etc/prometheus/secrets/litellm_token
+
+    static_configs:
+      - targets: ['litellm.wizerco.com']
+        labels:
+          service: 'litellm'
