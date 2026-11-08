@@ -1,4 +1,4 @@
-# Monitoring Stack Configuration Guide
+# setup Doc
 
 A step-by-step deployment guide for Node Exporter, NVIDIA DCGM Exporter, Prometheus, and Grafana.
 
